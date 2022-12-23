@@ -3,6 +3,7 @@ from selenium.common.exceptions import NoAlertPresentException
 import math
 
 class BasePage():
+ 
     def __init__(self, browser, url, timeout=10):
         self.browser = browser
         self.url = url
@@ -15,6 +16,7 @@ class BasePage():
         except (NoSuchElementException):
             return False
         return True
+    # Метод для тестового задания на степик, для понимания архитектуры PO - нафиг не нужен
     def solve_quiz_and_get_code(self):
         alert = self.browser.switch_to.alert
         x = alert.text.split(" ")[2]
