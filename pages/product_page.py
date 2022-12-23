@@ -1,12 +1,20 @@
 from .base_page import BasePage
 from selenium.webdriver.common.by import By
 from .locators import ProductPageLocators
+from selenium.common.exceptions import TimeoutException
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 class ProductPage(BasePage):
      
     def go_to_product_page(self):
         link = self.browser.find_element(*ProductPageLocators.ADD_BUTTON)
         link.click()
+
+    # Пытался продублировать сюда код, по ошибке, получил такое автозаполнение
+    # Изучить бы надо что оно имело в виду
+    #def go_to_login_page(self):
+        #return super().go_to_login_page()
               
     def attributes_in_basket_messages(self):
         name_point = self.browser.find_element(*ProductPageLocators.NAME_LINE).text
@@ -15,8 +23,18 @@ class ProductPage(BasePage):
         compare_price_point = self.browser.find_element(*ProductPageLocators.COMPARE_PRICE_POINT).text
         assert name_point == compare_name_point, "That is not ordered"
         assert price_point == compare_price_point, "Basket price is incorrect" 
-        print(name_point)
-        print(price_point)
-        print("***")
-        print(compare_name_point)
-        print(compare_price_point)
+      
+    def should_not_be_success_message(self):
+        assert self.is_not_element_present(*ProductPageLocators.SUCCESS_MESSAGE), "Success message is presented, but should not be"
+    
+    def should_be_success_message(self):
+        assert self.is_element_present(*ProductPageLocators.SUCCESS_MESSAGE), "Success message is not presented, but should be"
+    
+    def is_disappeared(self, how, what, timeout=4):
+        try:
+            WebDriverWait(self.browser, timeout, 1, TimeoutException).\
+                until_not(EC.presence_of_element_located((how, what)))
+        except TimeoutException:
+            return False
+
+        return True

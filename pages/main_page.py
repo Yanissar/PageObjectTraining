@@ -1,21 +1,26 @@
 from .base_page import BasePage
 from selenium.webdriver.common.by import By
-from .locators import MainPageLocators
-from .login_page import LoginPage
+# from .locators import MainPageLocators
+# from .login_page import LoginPage
 
 class MainPage(BasePage):
-    def go_to_login_page(self):
-        # Изначальный вариант конфигурации
+    # Заглушка, предложенная в ходе оптимизации, хотя ходили слухи, что можно было оставить "pass"
+    # Но нет, оптимизация же.
+    def __init__(self, *args, **kwargs):
+        super(MainPage, self).__init__(*args, **kwargs)
+    
+    # Изначальный вариант конфигурации, который всех устраивал, в общем-то и архитектурно и ремесленно
+    # Но оптимизация она такая. Безжалостная с**а. Сестра гравитации, видимо
+    #def go_to_login_page(self):
+        
         
         #login_link = self.browser.find_element(By.CSS_SELECTOR, "#login_link")
         #login_link.click() 
         
         # Предложенный на степике с перекрёстным импортом
         
-        link = self.browser.find_element(*MainPageLocators.LOGIN_LINK)
-        link.click()
-        
-        #return LoginPage(browser=self.browser, url=self.browser.current_url) 
+        #link = self.browser.find_element(*MainPageLocators.LOGIN_LINK)
+        #link.click()
 
-    def should_be_login_link(self):
-        assert self.is_element_present(*MainPageLocators.LOGIN_LINK), "Login link is not presented"
+    #def should_be_login_link(self):
+        #assert self.is_element_present(*MainPageLocators.LOGIN_LINK), "Login link is not presented"
