@@ -1,12 +1,13 @@
-from selenium.common.exceptions import NoSuchElementException
-from selenium.common.exceptions import NoAlertPresentException
 import math
-from selenium.common.exceptions import TimeoutException
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 from .locators import BasePageLocators
 from .locators import MainPageLocators
+from .locators import LoginPageLocators
 from .locators import ProductPageLocators
+from selenium.common.exceptions import TimeoutException
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import NoAlertPresentException
+from selenium.webdriver.support import expected_conditions as EC
 
 class BasePage():
     def __init__(self, browser, url, timeout=10):
@@ -63,3 +64,17 @@ class BasePage():
     def go_to_the_basket_from_main(self):
         link = self.browser.find_element(*MainPageLocators.BASKET_LINK)
         link.click()
+
+    def should_be_authorized_user(self):
+        assert self.is_element_present(*BasePageLocators.USER_ICON), "User icon is not presented,probably unauthorised user"
+
+    #def fill_register_random(self, email, password):
+     #   input_email = self.browser.find_element(*LoginPageLocators.REG_FORM)
+      #  input_pass = self.browser.find_element(*LoginPageLocators.PASS_FORM)
+       # input_pass2 = self.browser.find_element(*LoginPageLocators.PASS2_FORM)
+        #reg_button = self.browser.find_element(*LoginPageLocators.REG_BUTTON)
+        #input_email.send_keys(email)
+        #input_pass.send_keys(password)
+        #input_pass2.send_keys(password)
+       # reg_button.click()
+        #assert self.is_element_present(*LoginPageLocators.REG_MESSAGE), "Success registration message is not presented"
